@@ -1,8 +1,7 @@
+"use strict";
 /** Textual markov chain generator. */
 
-
 class MarkovMachine {
-
   /** Build markov machine; read in text.*/
 
   constructor(text) {
@@ -37,23 +36,34 @@ class MarkovMachine {
         phrases.set(this.words[i], [this.words[i + 1] || null]);
       }
     }
-    console.log(phrases);
+    return phrases;
   }
-
 
   /** Return random text from chains, starting at the first word and continuing
    *  until it hits a null choice. */
 
-  getText() {
-    // TODO: implement this!
-
+  getText(firstWord) {
+    let word = firstWord;
+    let randomString = word;
+    while (word !== null) {
+      let words = this.chains.get(word);
+      let randomIndex = Math.floor(Math.random() * words.length);
+      let newWord = words[randomIndex];
+      if (newWord !== null) {
+        randomString = randomString + " " + words[randomIndex];
+        //TODO: use back ticks
+      }
+      word = words[randomIndex];
+      // TODO: current word is a better name. generated text
+    }
+    console.log(randomString);
     // - start at the first word in the input text
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
   }
-
 }
 
+//TODO: read form a file
 // const fsP = require('fs/promises');
 // let args = process.argv;
 // let filePath = args[2];
@@ -77,9 +87,6 @@ class MarkovMachine {
 // }
 
 // getAndDo();
-let text = `when by now and tree by leaf
-she laughed his joy she cried his grief
-bird by snow and stir by still
-anyone’s any was all to her`;
+let text = `cat in the hat`;
 const catInHatMachine = new MarkovMachine(text);
-catInHatMachine.getText();
+catInHatMachine.getText("in");
