@@ -58,6 +58,7 @@ class MarkovMachine {
       // TODO: current word is a better name. generated text
     }
     console.log(generatedText);
+    return generatedText;
     // - start at the first word in the input text
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
@@ -91,3 +92,6 @@ class MarkovMachine {
 let text = `cat in the hat`;
 const catInHatMachine = new MarkovMachine(text);
 catInHatMachine.getText();
+
+
+module.exports = {MarkovMachine};
