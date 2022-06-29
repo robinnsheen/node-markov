@@ -42,21 +42,22 @@ class MarkovMachine {
   /** Return random text from chains, starting at the first word and continuing
    *  until it hits a null choice. */
 
-  getText(firstWord) {
-    let word = firstWord;
-    let randomString = word;
-    while (word !== null) {
-      let words = this.chains.get(word);
+  getText() {
+    let currWord = this.words[0];
+    let generatedText = currWord;
+
+    while (currWord !== null) {
+      let words = this.chains.get(currWord);
       let randomIndex = Math.floor(Math.random() * words.length);
       let newWord = words[randomIndex];
       if (newWord !== null) {
-        randomString = randomString + " " + words[randomIndex];
+        generatedText = `${generatedText} ${newWord}`;
         //TODO: use back ticks
       }
-      word = words[randomIndex];
+      currWord = newWord;
       // TODO: current word is a better name. generated text
     }
-    console.log(randomString);
+    console.log(generatedText);
     // - start at the first word in the input text
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
@@ -89,4 +90,4 @@ class MarkovMachine {
 // getAndDo();
 let text = `cat in the hat`;
 const catInHatMachine = new MarkovMachine(text);
-catInHatMachine.getText("in");
+catInHatMachine.getText();
